@@ -1,0 +1,1374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expressing Feelings: Infinitive vs. Subjunctive</title>
+    
+    <style>
+        :root {
+            --primary-blue: #007bff;
+            --dark-blue: #0056b3;
+            --green: #28a745;
+            --red: #dc3545;
+            --yellow: #f0ad4e;
+            
+            /* Esquema de colores */
+            --bg-color: #f0f4f8;
+            --container-bg: #ffffff;
+            --text-color: #333;
+            --header-bg: linear-gradient(135deg, var(--primary-blue), var(--dark-blue));
+            --tab-bg: #f1f1f1;
+            --tab-active-bg: var(--primary-blue);
+            --tab-text: #555;
+            --tab-active-text: #ffffff;
+            --border-color: #dee2e6;
+            --light-gray-bg: #f8f9fa;
+        }
+
+        /* --- Modo Oscuro --- */
+        body.dark-mode {
+            --bg-color: #121212;
+            --container-bg: #1e1e1e;
+            --text-color: #e0e0e0;
+            --header-bg: #1e1e1e;
+            --tab-bg: #333;
+            --tab-active-bg: var(--primary-blue);
+            --tab-text: #bbb;
+            --tab-active-text: #ffffff;
+            --border-color: #444;
+            --light-gray-bg: #2a2a2a;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .container {
+            max-width: 950px;
+            margin: 0 auto;
+            background-color: var(--container-bg);
+            border-radius: 12px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.07);
+            overflow: hidden;
+            transition: background-color 0.3s;
+        }
+        header {
+            background: var(--header-bg);
+            color: white;
+            padding: 20px 35px;
+            text-align: center;
+            position: relative;
+        }
+        header h1 { margin: 0; font-size: 2.5em; }
+        header p { font-size: 1.2em; opacity: 0.9; margin: 5px 0 0; }
+        
+        /* --- Controles de Cabecera (Idioma, Modo) --- */
+        .header-controls {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            display: flex;
+            gap: 10px;
+        }
+        .control-button {
+            background: rgba(255,255,255,0.2);
+            border: 1px solid rgba(255,255,255,0.7);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9em;
+            font-weight: bold;
+        }
+        .control-button:hover { background: rgba(255,255,255,0.4); }
+
+        /* --- Estructura de Pestañas Principales --- */
+        .main-tab-nav {
+            display: flex;
+            background-color: var(--tab-bg);
+            border-bottom: 3px solid var(--dark-blue);
+        }
+        .main-tab-nav button {
+            background-color: inherit; border: none; outline: none; cursor: pointer;
+            padding: 18px 25px; transition: 0.3s; font-size: 1.1em;
+            font-weight: bold; color: var(--tab-text); flex-grow: 1;
+        }
+        .main-tab-nav button:hover { background-color: var(--border-color); }
+        .main-tab-nav button.active { background-color: var(--tab-active-bg); color: var(--tab-active-text); }
+        
+        /* --- CAMBIO v6.2: Lógica de Pestañas con Clase --- */
+        .main-tab-content { 
+            display: none; 
+            padding: 30px;
+        }
+        .main-tab-content.is-active {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        /* --- Estilos Generales --- */
+        h2 { color: var(--primary-blue); border-bottom: 2px solid var(--primary-blue); padding-bottom: 5px; font-size: 1.8em; margin-top: 0; }
+        h3 { color: var(--green); font-size: 1.4em; }
+        .accent { color: var(--primary-blue); font-weight: bold; }
+        .comparison-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+        .tense-box { background-color: var(--light-gray-bg); border: 1px solid var(--border-color); border-radius: 8px; padding: 20px; }
+        .tense-box h3 { margin-top: 0; font-size: 1.6em; text-align: center; }
+        
+        .icon-wrapper { 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 80px;
+            margin-bottom: 15px; 
+            font-size: 4.5em; /* Aumenta el tamaño del emoji */
+        }
+        
+        .button-primary {
+            background-color: var(--primary-blue); color: white; border: none; padding: 10px 20px;
+            border-radius: 5px; cursor: pointer; font-size: 1em; font-weight: bold; transition: background-color 0.2s;
+        }
+        .button-primary:hover { background-color: var(--dark-blue); }
+        .button-secondary {
+            background-color: #6c757d; color: white; border: none; padding: 8px 15px;
+            border-radius: 5px; cursor: pointer; font-size: 0.9em;
+        }
+
+        /* --- Icono de Pronunciación (TTS) --- */
+        .tts-icon {
+            font-size: 1.1em;
+            cursor: pointer;
+            margin-left: 8px;
+            display: inline-block;
+            transition: transform 0.2s;
+        }
+        .tts-icon:hover { transform: scale(1.2); }
+
+        /* --- Pestaña 1: Visualizador de Fórmula --- */
+        .formula-visualizer {
+            background-color: var(--light-gray-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+        }
+        .formula-controls { margin-bottom: 20px; }
+        .formula-controls label { font-size: 1.2em; font-weight: bold; }
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+            margin: 0 10px;
+            vertical-align: middle;
+        }
+        .switch input { opacity: 0; width: 0; height: 0; }
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 34px;
+        }
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        input:checked + .slider { background-color: var(--primary-blue); }
+        input:checked + .slider:before { transform: translateX(26px); }
+        
+        .formula-display { font-size: 1.3em; font-weight: bold; }
+        .formula-part {
+            padding: 8px 12px;
+            border-radius: 5px;
+            background-color: var(--container-bg);
+            border: 1px solid var(--border-color);
+            margin: 0 5px;
+            display: inline-block;
+        }
+        .formula-part.subjunctive { background-color: #fff0f0; color: var(--red); border-color: var(--red); }
+        .formula-part.infinitive { background-color: #f0fff0; color: var(--green); border-color: var(--green); }
+        
+        /* Video Container */
+        .video-container {
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+            height: 0;
+            overflow: hidden;
+            border-radius: 8px;
+            background: #000;
+            margin-top: 20px;
+        }
+        .video-container iframe,
+        .video-container video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+        .video-placeholder {
+            background: var(--light-gray-bg);
+            border: 2px dashed var(--border-color);
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            margin-top: 20px;
+        }
+        .video-placeholder p { font-style: italic; color: #555; }
+        body.dark-mode .video-placeholder p { color: #bbb; }
+
+
+        /* --- Pestaña 2: Formación --- */
+        .tab-container { overflow: hidden; border: 1px solid var(--border-color); background-color: var(--tab-bg); border-radius: 5px 5px 0 0; }
+        .tab-container button { background-color: inherit; float: left; border: none; outline: none; cursor: pointer; padding: 14px 16px; transition: 0.3s; font-size: 1em; font-weight: bold; color: var(--tab-text); }
+        .tab-container button:hover { background-color: var(--border-color); }
+        .tab-container button.active { background-color: #ccc; color: #333; }
+        .nested-tab-content { display: none; padding: 10px 15px; border: 1px solid var(--border-color); border-top: none; border-radius: 0 0 5px 5px; }
+        table { width: 100%; border-collapse: collapse; margin-bottom: 15px; }
+        th, td { border: 1px solid var(--border-color); padding: 8px; text-align: center; }
+        th { background-color: var(--light-gray-bg); }
+
+        /* --- Pestaña 3: Práctica --- */
+        .quiz-section { margin-bottom: 25px; padding-bottom: 25px; border-bottom: 2px dashed var(--border-color); }
+        
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .section-header h3 {
+            margin: 0;
+        }
+        .refresh-btn {
+            font-size: 0.9em;
+            padding: 5px 10px;
+        }
+
+        .quiz-question { margin-bottom: 20px; background: var(--light-gray-bg); padding: 15px; border-radius: 5px; }
+        .quiz-question p { font-size: 1.1em; margin-bottom: 10px; }
+        .quiz-question button { background-color: var(--primary-blue); color: white; border: none; padding: 10px 15px; margin-right: 10px; border-radius: 5px; cursor: pointer; font-size: 1em; }
+        
+        .quiz-image-placeholder {
+            font-size: 3em;
+            text-align: center;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .quiz-translation {
+            display: block;
+            font-size: 0.9em;
+            font-style: italic;
+            color: #555;
+            margin: -5px 0 10px 20px;
+        }
+        body.dark-mode .quiz-translation { color: #bbb; }
+        .quiz-translation:empty { display: none; }
+
+        .feedback { font-weight: bold; margin-left: 10px; }
+        .correct { color: var(--green); }
+        .incorrect { color: var(--red); }
+        
+        .explanatory-note {
+            font-size: 0.9em;
+            font-style: italic;
+            background-color: var(--light-gray-bg);
+            border: 1px dashed var(--border-color);
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+        }
+        
+        .explanation-text {
+            font-size: 0.9em;
+            color: #555;
+            margin-top: 10px;
+            padding: 8px;
+            background: #e9ecef;
+            border-radius: 4px;
+        }
+        body.dark-mode .explanation-text {
+            color: #ccc;
+            background: #333;
+        }
+
+        /* Historia Interactiva */
+        .interactive-story { background: #fdfaf6; border: 1px solid var(--yellow); padding: 20px; border-radius: 8px; font-size: 1.2em; line-height: 2; color: #333; }
+        .interactive-story select { font-size: 1em; border: 2px solid #ccc; border-radius: 4px; background: #fff; padding: 2px 5px; }
+        .story-explanation {
+            display: block;
+            font-size: 0.9em;
+            font-style: italic;
+            color: var(--dark-blue);
+            margin-left: 10px;
+        }
+        body.dark-mode .interactive-story { color: #333; }
+        body.dark-mode .story-explanation { color: #80bfff; }
+
+        /* Drag & Drop */
+        .sorter-container { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 20px; }
+        .dropzone { min-height: 200px; background: var(--light-gray-bg); border: 3px dashed var(--border-color); border-radius: 8px; padding: 10px; }
+        .dropzone.drag-over { background-color: #e9ecef; border-color: var(--primary-blue); }
+        .dropzone h4 { text-align: center; margin-top: 0; }
+        .draggable { background-color: var(--container-bg); border: 1px solid #ccc; padding: 12px; margin-bottom: 8px; border-radius: 5px; cursor: grab; }
+        .draggable.dragging { 
+            opacity: 0.5; 
+            border: 2px dashed var(--primary-blue);
+        }
+        #items-to-sort { margin-top: 20px; padding: 10px; background: var(--tab-bg); border-radius: 8px; }
+        .drag-explanation {
+            font-size: 0.85em;
+            color: #555;
+            margin-top: 5px;
+            padding-top: 5px;
+            border-top: 1px dashed #ccc;
+        }
+        body.dark-mode .drag-explanation { color: #bbb; }
+
+        /* --- Pestaña 4: Flashcards --- */
+        .flashcard-app { display: flex; flex-direction: column; align-items: center; }
+        .flashcard-container { width: 90%; max-width: 500px; height: 300px; perspective: 1000px; margin-bottom: 20px; }
+        .flashcard {
+            width: 100%; height: 100%; position: relative; transform-style: preserve-3d;
+            transition: transform 0.6s; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.1); border-radius: 10px;
+        }
+        .flashcard.is-flipped { transform: rotateY(180deg); }
+        .card-face {
+            position: absolute; width: 100%; height: 100%;
+            backface-visibility: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 25px;
+            font-size: 1.5em;
+            border-radius: 10px;
+            box-sizing: border-box;
+            white-space: normal;
+            word-break: break-word; 
+        }
+        .card-front { background: var(--container-bg); border: 2px solid var(--primary-blue); color: var(--text-color); }
+        .card-back { background: var(--light-gray-bg); border: 2px solid var(--green); color: var(--dark-blue); transform: rotateY(180deg); }
+        .card-back p { margin: 10px 0 0; font-size: 0.8em; color: var(--text-color); opacity: 0.8; }
+        body.dark-mode .card-back { color: var(--text-color); }
+        .flashcard-nav { display: flex; justify-content: center; gap: 20px; }
+        .flashcard-nav button { font-size: 1em; font-weight: bold; }
+    </style>
+</head>
+<body class="">
+
+    <div class="container">
+        <header>
+            <div class="header-controls">
+                <button id="lang-toggle" class="control-button">(EN / ES)</button>
+                <button id="theme-toggle" class="control-button">☀️/🌙</button>
+            </div>
+            <h1 data-lang-key="header_title">Expressing Feelings</h1>
+            <p data-lang-key="header_subtitle">Mastering the 👤=👤 Infinitive vs. the 👤≠👥 Subjunctive</p>
+        </header>
+        
+        <nav class="main-tab-nav">
+            <button class="main-tab-link active" onclick="changeMainTab(event, 'tab-metafora')" data-lang-key="tab_metaphor">👤=👤 vs. 👤≠👥 The Metaphor</button>
+            <button class="main-tab-link" onclick="changeMainTab(event, 'tab-formacion')" data-lang-key="tab_formation">✍️ How It Works</button>
+            <button class="main-tab-link" onclick="changeMainTab(event, 'tab-practica')" data-lang-key="tab_practice">🧠 Interactive Practice</button>
+            <button class="main-tab-link" onclick="changeMainTab(event, 'tab-flashcards')" data-lang-key="tab_flashcards">📇 Flashcards</button>
+        </nav>
+
+        <main>
+            <div id="tab-metafora" class="main-tab-content is-active">
+                <h2 data-lang-key="metaphor_title">The Big Idea: Same or Different Subject?</h2>
+                <div class="comparison-grid">
+                    <div class="tense-box">
+                        <div class="icon-wrapper" style="color: var(--green);">
+                            <span>👤=👤</span>
+                        </div>
+                        <h3 style="color: var(--green);">Infinitive ➡️ (Same Subject)</h3>
+                        <p data-lang-key="metaphor_inf_desc">Used when the subject who *feels* is the **same** as the subject who *does* the action.</p>
+                        <p><strong>Example:</strong> "Yo quiero <strong>viajar</strong>." (I want to travel)</p>
+                    </div>
+                    <div class="tense-box">
+                        <div class="icon-wrapper" style="color: var(--red);">
+                            <span>👤≠👥</span>
+                        </div>
+                        <h3 style="color: var(--red);">Subjunctive ➡️ (Different Subject)</h3>
+                        <p data-lang-key="metaphor_subj_desc">Used when the subject who *feels* is **different** from the subject who *does* the action.</p>
+                        <p><strong>Example:</strong> "Yo quiero que tú <strong>viajes</strong>." (I want you to travel)</p>
+                    </div>
+                </div>
+
+                <h3 data-lang-key="viz_video_title" style="margin-top: 30px;">Video Tutorial</h3>
+                
+                <div class="video-placeholder" id="video-placeholder-id">
+                    <p data-lang-key="viz_video_desc">
+                        <div class="video-container">
+                            <iframe src="https://drive.google.com/file/d/1Zp_seWL55p9QxQRjH15PT_KJHSoa4LWA/preview" width="640" height="480" allow="autoplay"></iframe>
+                        </div>       
+                    </p>
+                </div>
+                <h3 data-lang-key="viz_title" style="margin-top: 30px;">Interactive Formula Visualizer</h3>
+                <p data-lang-key="viz_desc">How does the sentence change? Click the "QUE" switch to find out.</p>
+                
+                <div class="formula-visualizer">
+                    <div class="formula-controls">
+                        <label data-lang-key="viz_switch_inf">Infinitive</label>
+                        <label class="switch">
+                            <input type="checkbox" id="que-toggle" onchange="toggleFormula()">
+                            <span class="slider"></span>
+                        </label>
+                        <label data-lang-key="viz_switch_subj">Subjunctive (add "QUE")</label>
+                    </div>
+                    <div class="formula-display">
+                        <span class="formula-part">A mí me gusta...</span>
+                        <span class="formula-part" id="formula-que" style="display: none; background-color: #eee; border-color: #999;">que</span>
+                        <span class="formula-part infinitive" id="formula-result"><strong>hablar</strong> español.</span>
+                    </div>
+                </div>
+            </div>
+
+            <div id="tab-formacion" class="main-tab-content">
+                <h2 data-lang-key="form_title">How It Works (The Formula)</h2>
+                
+                <h3>Part 1: The "Gusta" Structure</h3>
+                <p data-lang-key="form_p1_desc">These verbs use Indirect Object Pronouns (me, te, le...) to say "to whom" the feeling occurs.</p>
+                
+                <div class="comparison-grid">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th data-lang-key="form_t1_col1">Clarifier (Optional)</th>
+                                <th data-lang-key="form_t1_col2">Pronoun (Required)</th>
+                                <th data-lang-key="form_t1_col3">Feeling Verb</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>(A mí)</td><td><strong>me</strong></td><td rowspan="5">gusta / encanta</td></tr>
+                            <tr><td>(A ti)</td><td><strong>te</strong></td></tr>
+                            <tr><td>(A él / ella / Ud.)</td><td><strong>le</strong></td></tr>
+                            <tr><td>(A nosotros)</td><td><strong>nos</strong></td></tr>
+                            <tr><td>(A ellos / Uds.)</td><td><strong>les</strong></td></tr>
+                        </tbody>
+                    </table>
+                    <table>
+                        <thead>
+                            <tr><th>Verbos Comunes</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>gustar, encantar</td></tr>
+                            <tr><td>molestar, fastidiar</td></tr>
+                            <tr><td>importar, interesar</td></tr>
+                            <tr><td>hacer ilusión, sorprender</td></tr>
+                            <tr><td>parecer (bien/mal)</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h3 style="margin-top: 30px;">Part 2: The Ending (Infinitive vs. Subjunctive)</h3>
+                <div class="comparison-grid">
+                    <div class="tense-box">
+                        <h3 style="color: var(--green);">Rule 1: Infinitive (Same Subject 👤=👤)</h3>
+                        <p data-lang-key="form_p2_inf">If the person who feels the emotion is the *same* person doing the second action, use the <strong>INFINITIVE</strong>.</p>
+                        <p><strong>(A mí) me gusta</strong> <strong><u>hablar</u></strong> español.</p>
+                        <p data-lang-key="form_p2_inf_trans">(I like to speak Spanish. -> <i>I like, I speak.</i>)</p>
+                    </div>
+                    <div class="tense-box">
+                        <h3 style="color: var(--red);">Rule 2: Subjunctive (Different Subjects 👤≠👥)</h3>
+                        <p data-lang-key="form_p2_subj">If the person who feels the emotion is *different* from the person doing the second action, you MUST use <strong>QUE + SUBJUNCTIVE</strong>.</p>
+                        <p><strong>(A mí) me gusta</strong> que <strong><u>hables</u></strong> español.</p>
+                        <p data-lang-key="form_p2_subj_trans">(I like that you speak Spanish. -> <i>I like, you speak.</i>)</p>
+                    </div>
+                </div>
+            </div>
+
+            <div id="tab-practica" class="main-tab-content">
+                <h2 data-lang-key="practice_title">Let's Practice! (Dynamic)</h2>
+                
+                <div class="quiz-section">
+                    <div class="section-header">
+                        <h3 data-lang-key="practice_quiz_title">Part 1: Quick Quiz</h3>
+                        <button id="generate-quiz" class="button-secondary refresh-btn" data-lang-key="btn_new_quiz">New Quiz</button>
+                    </div>
+                    <div class="explanatory-note" data-lang-key="practice_quiz_note">
+                        <strong>Note:</strong> The 🔊 audio for these questions reads the Spanish sentence with the verb in the infinitive (e.g., "ser", "hacer") so it doesn't give away the answer!
+                    </div>
+                    <div id="quiz-container"></div>
+                </div>
+
+                <div class="quiz-section">
+                    <div class="section-header">
+                        <h3 data-lang-key="practice_story_title">Part 2: Interactive Story</h3>
+                        <button id="generate-story" class="button-secondary refresh-btn" data-lang-key="btn_new_story">New Story</button>
+                    </div>
+                    <p data-lang-key="practice_story_desc">Complete the story by choosing the correct verb form.</p>
+                    <div id="story-container" class="interactive-story"></div>
+                    <button id="check-story-btn" class="button-primary" style="margin-top: 20px;" data-lang-key="practice_btn_check_story">Check Story</button>
+                    <div id="story-feedback"></div>
+                </div>
+
+                <div class="quiz-section">
+                    <div class="section-header">
+                        <h3 data-lang-key="practice_drag_title">Part 3: Sentence Sorter (Drag & Drop)</h3>
+                        <button id="generate-drag" class="button-secondary refresh-btn" data-lang-key="btn_new_sorter">New Sorter</button>
+                    </div>
+                    <p data-lang-key="practice_drag_desc">Drag each phrase to the category it best describes (the metaphor).</p>
+                    <div id="items-to-sort">
+                        <p><strong data-lang-key="practice_drag_items">Drag these phrases:</strong></p>
+                        <div id="drag-items-pool"></div>
+                    </div>
+                    <div class="sorter-container">
+                        <div class="dropzone" id="zone-infinitive">
+                            <h4 data-lang-key="practice_drag_inf">👤=👤 Infinitive (Same Subject)</h4>
+                        </div>
+                        <div class="dropzone" id="zone-subjunctive">
+                            <h4 data-lang-key="practice_drag_subj">👤≠👥 Subjunctive (Different Subjects)</h4>
+                        </div>
+                    </div>
+                    <button id="check-drag-btn" class="button-primary" style="margin-top: 20px;" data-lang-key="practice_btn_check_sort">Check Sorter</button>
+                    <div id="drag-feedback"></div>
+                </div>
+            </div>
+
+            <div id="tab-flashcards" class="main-tab-content">
+                <h2 data-lang-key="flash_title">Interactive Flashcards</h2>
+                <p style="text-align: center;" data-lang-key="flash_desc">Click the card to flip it. Use the buttons to navigate.</p>
+                
+                <div class="flashcard-app">
+                    <div class="flashcard-container">
+                        <div class="flashcard" id="flashcard">
+                            <div class="card-face card-front" id="card-front"></div>
+                            <div class="card-face card-back" id="card-back"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="flashcard-nav">
+                        <button onclick="prevCard()" class="button-secondary" data-lang-key="flash_btn_prev">Previous</button>
+                        <button onclick="flipCard()" class="button-primary btn-flip" data-lang-key="flash_btn_flip">Flip</button>
+                        <button onclick="nextCard()" class="button-secondary" data-lang-key="flash_btn_next">Next</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+    
+// --- BILINGUAL & THEME DATA ---
+
+const uiStrings = {
+    en: {
+        header_title: "Expressing Feelings",
+        header_subtitle: "Mastering the 👤=👤 Infinitive vs. the 👤≠👥 Subjunctive",
+        tab_metaphor: "👤=👤 vs. 👤≠👥 The Metaphor",
+        tab_formation: "✍️ How It Works",
+        tab_practice: "🧠 Interactive Practice",
+        tab_flashcards: "📇 Flashcards",
+        past: "Past",
+        present: "Present",
+        metaphor_title: "The Big Idea: Same or Different Subject?",
+        metaphor_inf_desc: "Used when the subject who *feels* is the **same** as the subject who *does* the action.",
+        metaphor_subj_desc: "Used when the subject who *feels* is **different** from the subject who *does* the action.",
+        viz_video_title: "Video Tutorial",
+        viz_title: "Interactive Formula Visualizer",
+        viz_desc: "How does the sentence change? Click the \"QUE\" switch to find out.",
+        viz_switch_inf: "Infinitive",
+        viz_switch_subj: "Subjunctive (add \"QUE\")",
+        form_title: "How It Works (The Formula)",
+        form_p1_desc: "These verbs use Indirect Object Pronouns (me, te, le...) to say \"to whom\" the feeling occurs.",
+        form_t1_col1: "Clarifier (Optional)",
+        form_t1_col2: "Pronoun (Required)",
+        form_t1_col3: "Feeling Verb",
+        form_p2_inf: "If the person who feels the emotion is the *same* person doing the second action, use the <strong>INFINITIVE</strong>.",
+        form_p2_inf_trans: "(I like to speak Spanish. -> <i>I like, I speak.</i>)",
+        form_p2_subj: "If the person who feels the emotion is *different* from the person doing the second action, you MUST use <strong>QUE + SUBJUNCTIVE</strong>.",
+        form_p2_subj_trans: "(I like that you speak Spanish. -> <i>I like, you speak.</i>)",
+        practice_title: "Let's Practice! (Dynamic)",
+        practice_quiz_title: "Part 1: Quick Quiz",
+        practice_quiz_note: "<strong>Note:</strong> The 🔊 audio for these questions reads the Spanish sentence with the verb in the infinitive (e.g., \"ser\", \"hacer\") so it doesn't give away the answer!",
+        practice_story_title: "Part 2: Interactive Story",
+        practice_story_desc: "Complete the story by choosing the correct verb form.",
+        practice_btn_check_story: "Check Story",
+        practice_drag_title: "Part 3: Sentence Sorter (Drag & Drop)",
+        practice_drag_desc: "Drag each phrase to the category it best describes (the metaphor).",
+        practice_drag_items: "Drag these phrases:",
+        practice_drag_inf: "👤=👤 Infinitive (Same Subject)",
+        practice_drag_subj: "👤≠👥 Subjunctive (Different Subjects)",
+        practice_btn_check_sort: "Check Sorter",
+        btn_new_quiz: "New Quiz",
+        btn_new_story: "New Story",
+        btn_new_sorter: "New Sorter",
+        flash_title: "Interactive Flashcards",
+        flash_desc: "Click the card to flip it. Use the buttons to navigate.",
+        flash_btn_prev: "Previous",
+        flash_btn_flip: "Flip",
+        flash_btn_next: "Next",
+        // Feedback
+        feedback_correct: "Correct! 👍",
+        feedback_incorrect: "Try again. 😕",
+        feedback_check_story_perfect: "Perfect! You understood all the context!",
+        feedback_check_story_errors: "You have {correct} of {total} correct. Check the red ones!",
+        feedback_drag_perfect: "Excellent! All categories are correct!",
+        feedback_drag_errors: "You have {correct} of {total} correct. Check the red ones.",
+        
+        // Traducciones del Quiz
+        quiz_q1_trans: "I'm bothered by working on Saturdays.",
+        quiz_q2_trans: "It bothers me that you work on Saturdays.",
+        quiz_q3_trans: "We love to travel.",
+        quiz_q4_trans: "We love that people travel.",
+        quiz_q5_trans: "She is excited to graduate.",
+        quiz_q6_trans: "She is excited that her son is graduating.",
+        quiz_q7_trans: "I'm surprised to see you here.",
+        quiz_q8_trans: "I'm surprised that you are here.",
+        quiz_q9_trans: "I don't mind paying the bill.",
+        quiz_q10_trans: "I don't mind that you (formal) pay the bill.",
+        quiz_q11_trans: "Does it bother you to open the window?",
+        quiz_q12_trans: "Does it bother you that I open the window?",
+        quiz_q13_trans: "I think it's bad to spend so much money.",
+        quiz_q14_trans: "I think it's bad that they spend so much money.",
+        quiz_q15_trans: "We dislike people who talk a lot."
+    },
+    es: {
+        header_title: "Expresar Sentimientos",
+        header_subtitle: "Dominando el 👤=👤 Infinitivo vs. el 👤≠👥 Subjuntivo",
+        tab_metaphor: "👤=👤 vs. 👤≠👥 La Metáfora",
+        tab_formation: "✍️ Cómo Funciona",
+        tab_practice: "🧠 Práctica Interactiva",
+        tab_flashcards: "📇 Flashcards",
+        past: "Pasado",
+        present: "Presente",
+        metaphor_title: "La Gran Idea: ¿Mismo Sujeto o Sujeto Diferente?",
+        metaphor_inf_desc: "Se usa cuando el sujeto que *siente* es el **mismo** que el sujeto que *hace* la acción.",
+        metaphor_subj_desc: "Se usa cuando el sujeto que *siente* es **diferente** al sujeto que *hace* la acción.",
+        viz_video_title: "Video Tutorial",
+        viz_video_desc: "Tu video tutorial aparecerá aquí. Edita el archivo HTML para añadir tu código de inserción (embed code).",
+        viz_title: "Visualizador de Fórmula Interactivo",
+        viz_desc: "¿Cómo cambia la oración? Haz clic en el interruptor \"QUE\" para descubrirlo.",
+        viz_switch_inf: "Infinitivo",
+        viz_switch_subj: "Subjuntivo (añade \"QUE\")",
+        form_title: "Cómo Funciona (La Fórmula)",
+        form_p1_desc: "Estos verbos usan Pronombres de Objeto Indirecto (me, te, le...) para decir \"a quién\" le ocurre el sentimiento.",
+        form_t1_col1: "Clarificador (Opcional)",
+        form_t1_col2: "Pronombre (Requerido)",
+        form_t1_col3: "Verbo de Sentimiento",
+        form_p2_inf: "Si la persona que siente la emoción es la *misma* persona que hace la segunda acción, usa el <strong>INFINITIVO</strong>.",
+        form_p2_inf_trans: "(<i>A mí me gusta, yo hablo.</i>)",
+        form_p2_subj: "Si la persona que siente la emoción es *diferente* de la persona que hace la segunda acción, DEBES usar <strong>QUE + SUBJUNCTIVO</strong>.",
+        form_p2_subj_trans: "(<i>A mí me gusta, tú hablas.</i>)",
+        practice_title: "¡A Practicar! (Dinámico)",
+        practice_quiz_title: "Parte 1: Quiz Rápido",
+        practice_quiz_note: "<strong>Nota:</strong> ¡El audio 🔊 de estas preguntas lee la oración en español con el verbo en infinitivo (ej. \"ser\", \"hacer\") para no revelar la respuesta!",
+        practice_story_title: "Parte 2: Historia Interactiva",
+        practice_story_desc: "Completa la historia eligiendo la forma correcta del verbo.",
+        practice_btn_check_story: "Revisar Historia",
+        practice_drag_title: "Parte 3: Clasificador de Oraciones (Arrastrar)",
+        practice_drag_desc: "Arrastra cada frase a la categoría que mejor la describe (la metáfora).",
+        practice_drag_items: "Arrastra estas frases:",
+        practice_drag_inf: "👤=👤 Infinitivo (Mismo Sujeto)",
+        practice_drag_subj: "👤≠👥 Subjuntivo (Sujetos Diferentes)",
+        practice_btn_check_sort: "Revisar Clasificador",
+        btn_new_quiz: "Nuevo Quiz",
+        btn_new_story: "Nueva Historia",
+        btn_new_sorter: "Nuevo Clasificador",
+        flash_title: "Flashcards Interactivas",
+        flash_desc: "Haz clic en la tarjeta para voltearla. Usa los botones para navegar.",
+        flash_btn_prev: "Anterior",
+        flash_btn_flip: "Voltear",
+        flash_btn_next: "Siguiente",
+        // Feedback
+        feedback_correct: "¡Correcto! 👍",
+        feedback_incorrect: "Inténtalo de nuevo. 😕",
+        feedback_check_story_perfect: "¡Perfecto! ¡Has entendido todo el contexto!",
+        feedback_check_story_errors: "Tienes {correct} de {total} correctas. ¡Revisa las rojas!",
+        feedback_drag_perfect: "¡Excelente! ¡Todas las categorías son correctas!",
+        feedback_drag_errors: "Tienes {correct} de {total} correctas. Revisa las rojas.",
+        
+        // Traducciones del Quiz (vacías en español)
+        quiz_q1_trans: "",
+        quiz_q2_trans: "",
+        quiz_q3_trans: "",
+        quiz_q4_trans: "",
+        quiz_q5_trans: "",
+        quiz_q6_trans: "",
+        quiz_q7_trans: "",
+        quiz_q8_trans: "",
+        quiz_q9_trans: "",
+        quiz_q10_trans: "",
+        quiz_q11_trans: "",
+        quiz_q12_trans: "",
+        quiz_q13_trans: "",
+        quiz_q14_trans: "",
+        quiz_q15_trans: ""
+    }
+};
+
+let currentLanguage = 'en';
+
+// --- BANCOS DE PREGUNTAS (DATA) ---
+
+// --- Banco de Flashcards ---
+const flashcardData = [
+    { en: "I like to talk.", es: "Me gusta <strong>hablar</strong>.", explanation: "Same Subject (I like, I talk) 👤=👤" },
+    { en: "I like that you talk.", es: "Me gusta que <strong>hables</strong>.", explanation: "Different Subjects (I like, you talk) 👤≠👥" },
+    { en: "She is bothered by waiting.", es: "A ella le molesta <strong>esperar</strong>.", explanation: "Same Subject (She is bothered, she waits) 👤=👤" },
+    { en: "She is bothered that we wait.", es: "A ella le molesta que <strong>esperemos</strong>.", explanation: "Different Subjects (She is bothered, we wait) 👤≠👥" },
+    { en: "We are excited to travel.", es: "Nos hace ilusión <strong>viajar</strong>.", explanation: "Same Subject (We are excited, we travel) 👤=👤" },
+    { en: "We are excited that they travel.", es: "Nos hace ilusión que <strong>viajen</strong>.", explanation: "Different Subjects (We are excited, they travel) 👤≠👥" },
+    { en: "He is surprised to see me.", es: "A él le sorprende <strong>verme</strong>.", explanation: "Same Subject (He is surprised, he sees) 👤=👤" },
+    { en: "He is surprised that I see him.", es: "A él le sorprende que yo lo <strong>vea</strong>.", explanation: "Different Subjects (He is surprised, I see) 👤≠👥" },
+    { en: "They don't mind working.", es: "A ellos no les importa <strong>trabajar</strong>.", explanation: "Same Subject (They don't mind, they work) 👤=👤" },
+    { en: "They don't mind that I work.", es: "A ellos no les importa que yo <strong>trabaje</strong>.", explanation: "Different Subjects (They don't mind, I work) 👤≠👥" },
+    { en: "I love to learn.", es: "Me encanta <strong>aprender</strong>.", explanation: "Same Subject (I love, I learn) 👤=👤" },
+    { en: "I love that she learns.", es: "Me encanta que ella <strong>aprenda</strong>.", explanation: "Different Subjects (I love, she learns) 👤≠👥" }
+];
+
+// --- Banco de Quiz Rápido ---
+const quizBank = [
+    { id: "q1", question_es: "A mí me molesta (trabajar) los sábados.", options: ["trabajar", "trabaje"], correct: 0, explanation: "Same subject (I am bothered, I work) 👤=👤. Use Infinitive." },
+    { id: "q2", question_es: "A mí me molesta que tú (trabajar) los sábados.", options: ["trabajar", "trabajes"], correct: 1, explanation: "Different subjects (I am bothered, you work) 👤≠👥. Use QUE + Subjunctive." },
+    { id: "q3", question_es: "Nos encanta (viajar) a la playa.", options: ["viajar", "viajemos"], correct: 0, explanation: "Same subject (We love, we travel) 👤=👤. Use Infinitive." },
+    { id: "q4", question_es: "Nos encanta que la gente (viajar) a la playa.", options: ["viajar", "viaje"], correct: 1, explanation: "Different subjects (We love, people travel) 👤≠👥. Use QUE + Subjunctive." },
+    { id: "q5", question_es: "A ella le hace ilusión (graduarse) pronto.", options: ["graduarse", "se gradúe"], correct: 0, explanation: "Same subject (She is excited, she graduates) 👤=👤. Use Infinitive." },
+    { id: "q6", question_es: "A ella le hace ilusión que su hijo (graduarse) pronto.", options: ["graduarse", "se gradúe"], correct: 1, explanation: "Different subjects (She is excited, her son graduates) 👤≠👥. Use QUE + Subjunctive." },
+    { id: "q7", question_es: "Me sorprende (verte) aquí.", options: ["ver", "vea"], correct: 0, explanation: "Same subject (I am surprised, I see) 👤=👤. Use Infinitive." },
+    { id: "q8", question_es: "Me sorprende que tú (estar) aquí.", options: ["estar", "estés"], correct: 1, explanation: "Different subjects (I am surprised, you are) 👤≠👥. Use QUE + Subjunctive." },
+    { id: "q9", question_es: "No me importa (pagar) la cuenta.", options: ["pagar", "pague"], correct: 0, explanation: "Same subject (I don't mind, I pay) 👤=👤. Use Infinitive." },
+    { id: "q10", question_es: "No me importa que Ud. (pagar) la cuenta.", options: ["pagar", "pague"], correct: 1, explanation: "Different subjects (I don't mind, you pay) 👤≠👥. Use QUE + Subjunctive." },
+    { id: "q11", question_es: "¿Te molesta (abrir) la ventana?", options: ["abrir", "abras"], correct: 0, explanation: "Same subject (You are bothered, you open) 👤=👤. Use Infinitive." },
+    { id: "q12", question_es: "¿Te molesta que yo (abrir) la ventana?", options: ["abrir", "abra"], correct: 1, explanation: "Different subjects (You are bothered, I open) 👤≠👥. Use QUE + Subjunctive." },
+    { id: "q13", question_es: "Me parece mal (gastar) tanto dinero.", options: ["gastar", "gaste"], correct: 0, explanation: "Impersonal expression, but it implies 'I' think it's bad 'to spend' (general). Use Infinitive." },
+    { id: "q14", question_es: "Me parece mal que ellos (gastar) tanto dinero.", options: ["gastar", "gasten"], correct: 1, explanation: "Different subjects (I think it's bad, they spend) 👤≠👥. Use QUE + Subjunctive." },
+    { id: "q15", question_es: "Nos cae mal la gente que (hablar) mucho.", options: ["hablar", "habla"], correct: 1, explanation: "Trick! This uses 'que' but not for subjunctive. It's a relative pronoun: 'We dislike people *who talk* a lot.' Use Indicative." }
+];
+
+// --- Banco de Historias ---
+const storyBank = [
+    {
+        id: "story1",
+        total: 4,
+        html: `
+            <span>A mi madre le encanta que yo la</span> 
+            <select id="story1-1" data-exp-en="Different subjects (She loves, I visit) 👤≠👥" data-exp-es="Sujetos diferentes (A ella le encanta, yo visito) 👤≠👥"><option value="incorrecto">visitar</option><option value="correcto">visite</option></select>
+            <span>los fines de semana. A mí también me gusta</span> 
+            <select id="story1-2" data-exp-en="Same subject (I like, I visit) 👤=👤" data-exp-es="Mismo sujeto (A mí me gusta, yo visito) 👤=👤"><option value="correcto">visitar</option><option value="incorrecto">visite</option></select>
+            <span>a mi familia. Pero me molesta que mi hermano no</span> 
+            <select id="story1-3" data-exp-en="Different subjects (I am bothered, he comes) 👤≠👥" data-exp-es="Sujetos diferentes (Me molesta, él viene) 👤≠👥"><option value="incorrecto">venir</option><option value="correcto">venga</option></select>
+            <span>nunca. A él no le importa</span> 
+            <select id="story1-4" data-exp-en="Same subject (He doesn't mind, he sees) 👤=👤" data-exp-es="Mismo sujeto (A él no le importa, él ve) 👤=👤"><option value="correcto">ver</option><option value="incorrecto">vea</option></select>
+            <span>a nuestros padres.</span>
+        `
+    },
+    {
+        id: "story2",
+        total: 4,
+        html: `
+            <span>A los estudiantes les parece bien</span> 
+            <select id="story2-1" data-exp-en="Same subject (The students think it's fine, they have) 👤=👤" data-exp-es="Mismo sujeto (A ellos les parece bien, ellos tienen) 👤=👤"><option value="correcto">tener</option><option value="incorrecto">tengan</option></select>
+            <span>esta clase. Les gusta que el profesor</span> 
+            <select id="story2-2" data-exp-en="Different subjects (They like, the teacher is) 👤≠👥" data-exp-es="Sujetos diferentes (A ellos les gusta, el profesor es) 👤≠👥"><option value="incorrecto">ser</option><option value="correcto">sea</option></select>
+            <span>simpático. Al profesor le cae mal que los estudiantes no</span> 
+            <select id="story2-3" data-exp-en="Different subjects (He dislikes, the students do) 👤≠👥" data-exp-es="Sujetos diferentes (A él le cae mal, los estudiantes hacen) 👤≠👥"><option value="incorrecto">hacer</option><option value="correcto">hagan</option></select>
+            <span>la tarea. Pero a él le encanta</span> 
+            <select id="story2-4" data-exp-en="Same subject (He loves, he teaches) 👤=👤" data-exp-es="Mismo sujeto (A él le encanta, él enseña) 👤=👤"><option value="correcto">enseñar</option><option value="incorrecto">enseñe</option></select>
+            <span>español.</span>
+        `
+    },
+    {
+        id: "story3",
+        total: 4,
+        html: `
+            <span>A mi me hace ilusión</span> 
+            <select id="story3-1" data-exp-en="Same subject (I am excited, I travel) 👤=👤" data-exp-es="Mismo sujeto (Me hace ilusión, yo viajo) 👤=👤"><option value="correcto">viajar</option><option value="incorrecto">viaje</option></select>
+            <span>a Costa Rica este verano. Me sorprende que mis padres me</span> 
+            <select id="story3-2" data-exp-en="Different subjects (I am surprised, they permit) 👤≠👥" data-exp-es="Sujetos diferentes (Me sorprende, ellos permiten) 👤≠👥"><option value="incorrecto">permitir</option><option value="correcto">permitan</option></select>
+            <span>ir solo. A ellos no les molesta</span> 
+            <select id="story3-3" data-exp-en="Same subject (They are not bothered, they stay) 👤=👤" data-exp-es="Mismo sujeto (No les molesta, ellos se quedan) 👤=👤"><option value="correcto">quedarse</option><option value="incorrecto">se queden</option></select>
+            <span>en casa. Solo me piden que yo los</span> 
+            <select id="story3-4" data-exp-en="Different subjects (They ask, I call) 👤≠👥" data-exp-es="Sujetos diferentes (Ellos piden, yo llamo) 👤≠👥"><option value="incorrecto">llamar</option><option value="correcto">llame</option></select>
+            <span>todos los días.</span>
+        `
+    }
+];
+
+// --- Banco de Drag & Drop ---
+const dragDropBank = [
+    { id: 1, text: "Me gusta <strong>hablar</strong>.", type: "infinitive", exp_en: "Same Subject (I like, I talk) 👤=👤", exp_es: "Mismo Sujeto (Me gusta, yo hablo) 👤=👤" },
+    { id: 2, text: "Me gusta que <strong>hables</strong>.", type: "subjunctive", exp_en: "Different Subjects (I like, you talk) 👤≠👥", exp_es: "Sujetos Diferentes (Me gusta, tú hablas) 👤≠👥" },
+    { id: 3, text: "Nos encanta <strong>comer</strong> pizza.", type: "infinitive", exp_en: "Same Subject (We love, we eat) 👤=👤", exp_es: "Mismo Sujeto (Nos encanta, nosotros comemos) 👤=👤" },
+    { id: 4, text: "Nos encanta que <strong>comas</strong> pizza.", type: "subjunctive", exp_en: "Different Subjects (We love, you eat) 👤≠👥", exp_es: "Sujetos Diferentes (Nos encanta, tú comes) 👤≠👥" },
+    { id: 5, text: "A ella le molesta <strong>esperar</strong>.", type: "infinitive", exp_en: "Same Subject (She is bothered, she waits) 👤=👤", exp_es: "Mismo Sujeto (Le molesta, ella espera) 👤=👤" },
+    { id: 6, text: "A ella le molesta que <strong>esperemos</strong>.", type: "subjunctive", exp_en: "Different Subjects (She is bothered, we wait) 👤≠👥", exp_es: "Sujetos Diferentes (Le molesta, nosotros esperamos) 👤≠👥" },
+    { id: 7, text: "Me hace ilusión <strong>ir</strong> a la fiesta.", type: "infinitive", exp_en: "Same Subject (I am excited, I go) 👤=👤", exp_es: "Mismo Sujeto (Me hace ilusión, yo voy) 👤=👤" },
+    { id: 8, text: "Me hace ilusión que <strong>vayas</strong> a la fiesta.", type: "subjunctive", exp_en: "Different Subjects (I am excited, you go) 👤≠👥", exp_es: "Sujetos Diferentes (Me hace ilusión, tú vas) 👤≠👥" },
+    { id: 9, text: "A Juan le sorprende <strong>saber</strong> la verdad.", type: "infinitive", exp_en: "Same Subject (Juan is surprised, he knows) 👤=👤", exp_es: "Mismo Sujeto (A Juan le sorprende, él sabe) 👤=👤" },
+    { id: 10, text: "A Juan le sorprende que <strong>sepamos</strong> la verdad.", type: "subjunctive", exp_en: "Different Subjects (Juan is surprised, we know) 👤≠👥", exp_es: "Sujetos Diferentes (A Juan le sorprende, nosotros sabemos) 👤≠👥" },
+    { id: 11, text: "No me importa <strong>levantarme</strong> temprano.", type: "infinitive", exp_en: "Same Subject (I don't mind, I get up) 👤=👤", exp_es: "Mismo Sujeto (No me importa, yo me levanto) 👤=👤" },
+    { id: 12, text: "No me importa que te <strong>levantes</strong> temprano.", type: "subjunctive", exp_en: "Different Subjects (I don't mind, you get up) 👤≠👥", exp_es: "Sujetos Diferentes (No me importa, tú te levantas) 👤≠👥" },
+    { id: 13, text: "Me parece bien <strong>descansar</strong>.", type: "infinitive", exp_en: "Same Subject (I think it's fine, I rest) 👤=👤", exp_es: "Mismo Sujeto (Me parece bien, yo descanso) 👤=👤" },
+    { id: 14, text: "Me parece bien que <strong>descanses</strong>.", type: "subjunctive", exp_en: "Different Subjects (I think it's fine, you rest) 👤≠👥", exp_es: "Sujetos Diferentes (Me parece bien, tú descansas) 👤≠👥" },
+    { id: 15, text: "Les fastidia <strong>hacer</strong> tarea.", type: "infinitive", exp_en: "Same Subject (It annoys them, they do) 👤=👤", exp_es: "Mismo Sujeto (Les fastidia, ellos hacen) 👤=👤" },
+    { id: 16, text: "Les fastidia que la clase <strong>tenga</strong> tarea.", type: "subjunctive", exp_en: "Different Subjects (It annoys them, the class has) 👤≠👥", exp_es: "Sujetos Diferentes (Les fastidia, la clase tiene) 👤≠👥" }
+];
+
+
+// --- LÓGICA DE LA APLICACIÓN ---
+
+document.addEventListener('DOMContentLoaded', () => {
+
+    // --- Lógica de Pestañas ---
+    window.changeMainTab = function(evt, tabId) {
+        var i, tabcontent, tablinks;
+        
+        // Oculta todo el contenido
+        tabcontent = document.getElementsByClassName("main-tab-content");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].classList.remove("is-active"); // NUEVA LÓGICA v6.2
+        }
+        
+        // Desactiva todos los botones
+        tablinks = document.getElementsByClassName("main-tab-link");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(" active", "");
+        }
+        
+        // Muestra la pestaña y el botón correctos
+        document.getElementById(tabId).classList.add("is-active"); // NUEVA LÓGICA v6.2
+        evt.currentTarget.className += " active";
+        
+        // Carga la práctica la primera vez que se abre esa pestaña
+        if (tabId === 'tab-practica' && !document.getElementById('quiz-container').hasChildNodes()) {
+            generateQuiz();
+            generateStory();
+            generateDragDrop();
+        }
+    }
+
+    window.openConjugationTab = function(evt, tabName) {
+        var i, tabcontent, tablinks;
+        var parentTab = document.getElementById('tab-formacion');
+        tabcontent = parentTab.getElementsByClassName("nested-tab-content");
+        for (i = 0; i < tabcontent.length; i++) { tabcontent[i].style.display = "none"; }
+        tablinks = parentTab.getElementsByClassName("nested-tab-link");
+        for (i = 0; i < tablinks.length; i++) { tablinks[i].className = tablinks[i].className.replace(" active", ""); }
+        document.getElementById(tabName).style.display = "block";
+        evt.currentTarget.className += " active";
+    }
+
+    // --- Lógica de Idioma y Tema ---
+    const langToggle = document.getElementById('lang-toggle');
+    const themeToggle = document.getElementById('theme-toggle');
+
+    langToggle.addEventListener('click', () => {
+        currentLanguage = (currentLanguage === 'en') ? 'es' : 'en';
+        updateLanguage();
+    });
+
+    themeToggle.addEventListener('click', () => {
+        document.body.classList.toggle('dark-mode');
+    });
+
+    function updateLanguageForElement(element) {
+        const strings = uiStrings[currentLanguage];
+        element.querySelectorAll('[data-lang-key]').forEach(el => {
+            const key = el.dataset.langKey;
+            
+            if (strings[key] !== undefined) {
+                el.innerHTML = strings[key];
+            }
+        });
+    }
+
+    function updateLanguage() {
+        document.documentElement.lang = currentLanguage;
+        updateLanguageForElement(document.body);
+        
+        if (document.getElementById('tab-practica').style.display === 'block') {
+            // Actualiza el idioma del quiz
+            document.querySelectorAll('.quiz-question').forEach(qEl => {
+                const qId = qEl.dataset.quizId;
+                const quizData = quizBank.find(q => q.id === qId);
+                if (quizData) {
+                    const qTransEl = qEl.querySelector('span.quiz-translation');
+                    const qExplEl = qEl.querySelector('div.explanation-text');
+                    
+                    const translationKey = `quiz_${quizData.id}_trans`;
+                    if (qTransEl) {
+                        qTransEl.innerHTML = uiStrings[currentLanguage][translationKey] || '';
+                    }
+                    
+                    if (qExplEl) {
+                        qExplEl.innerHTML = `<strong>${currentLanguage === 'en' ? 'Explanation' : 'Explicación'}:</strong> ${quizData.explanation}`;
+                    }
+                }
+            });
+            
+            // Actualiza las explicaciones de la historia si ya están visibles
+            storyContainer.querySelectorAll('.story-explanation').forEach(expl => {
+                const select = expl.previousElementSibling;
+                if (select && select.tagName === 'SELECT') {
+                    const expKey = (currentLanguage === 'en') ? 'expEn' : 'expEs';
+                    expl.textContent = `(${select.dataset[expKey]})`;
+                }
+            });
+
+            // Actualiza las explicaciones de Drag & Drop si ya están visibles
+            document.querySelectorAll('.draggable').forEach(item => {
+                const explEl = item.querySelector('.drag-explanation');
+                if (explEl) {
+                    const expKey = (currentLanguage === 'en') ? 'explanationEn' : 'explanationEs';
+                    explEl.textContent = `(${item.dataset[expKey]})`;
+                }
+            });
+        }
+
+        loadCard(currentCard);
+    }
+    
+    // --- Lógica de Síntesis de Voz (TTS) ---
+    const synth = window.speechSynthesis;
+    let voices = [];
+
+    function loadVoices() {
+        voices = synth.getVoices();
+    }
+    
+    loadVoices();
+    if (synth.onvoiceschanged !== undefined) {
+        synth.onvoiceschanged = loadVoices;
+    }
+
+    function speak(text, lang = 'es-ES') {
+        if (synth.speaking) {
+            synth.cancel();
+        }
+        
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = lang;
+        utterance.rate = 0.9;
+
+        let bestVoice = voices.find(v => v.lang.startsWith('es') && v.name.includes('Google'));
+        if (!bestVoice) {
+            bestVoice = voices.find(v => v.lang.startsWith('es') && v.localService === false);
+        }
+        if (!bestVoice) {
+            bestVoice = voices.find(v => v.lang.startsWith('es') && (v.name.includes('Apple') || v.name.includes('Microsoft')));
+        }
+        if (!bestVoice) {
+            bestVoice = voices.find(v => v.lang.startsWith('es-ES') || v.lang.startsWith('es-MX'));
+        }
+        if (!bestVoice) {
+            bestVoice = voices.find(v => v.lang.startsWith('es'));
+        }
+
+        if (bestVoice) {
+            utterance.voice = bestVoice;
+        }
+
+        synth.speak(utterance);
+    }
+    
+    // --- Lógica de Clic de Audio Separada ---
+    
+    // Listener para todos los íconos de audio que NO están en una flashcard
+    document.body.addEventListener('click', function(e) {
+        if (e.target.classList.contains('tts-icon') && !e.target.closest('#flashcard')) {
+            const textToSpeak = e.target.dataset.tts;
+            if (textToSpeak) {
+                speak(textToSpeak);
+            }
+        }
+    });
+
+    // --- Pestaña 1: Visualizador ---
+    window.toggleFormula = function() {
+        const toggle = document.getElementById('que-toggle');
+        const quePart = document.getElementById('formula-que');
+        const resultPart = document.getElementById('formula-result');
+
+        if (toggle.checked) {
+            // Muestra Subjuntivo
+            quePart.style.display = 'inline-block';
+            resultPart.innerHTML = 'que <strong>hables</strong> español.';
+            resultPart.classList.remove('infinitive');
+            resultPart.classList.add('subjunctive');
+        } else {
+            // Muestra Infinitivo
+            quePart.style.display = 'none';
+            resultPart.innerHTML = '<strong>hablar</strong> español.';
+            resultPart.classList.remove('subjunctive');
+            resultPart.classList.add('infinitive');
+        }
+    }
+
+    // --- Pestaña 3: Lógica de Práctica Dinámica ---
+    
+    const quizContainer = document.getElementById('quiz-container');
+    const storyContainer = document.getElementById('story-container');
+    const checkStoryBtn = document.getElementById('check-story-btn');
+    const storyFeedback = document.getElementById('story-feedback');
+    const dragPool = document.getElementById('drag-items-pool');
+    const checkDragBtn = document.getElementById('check-drag-btn');
+    const dragFeedback = document.getElementById('drag-feedback');
+    
+    // Asignación de botones individuales
+    document.getElementById('generate-quiz').addEventListener('click', generateQuiz);
+    document.getElementById('generate-story').addEventListener('click', generateStory);
+    document.getElementById('generate-drag').addEventListener('click', generateDragDrop);
+
+    let currentDragItems = [];
+    let currentStoryData = {};
+
+    // 1. Generar Quiz
+    function generateQuiz() {
+        quizContainer.innerHTML = '';
+        const selectedQuestions = shuffleArray(quizBank).slice(0, 3);
+        
+        selectedQuestions.forEach((q, index) => {
+            const qId = `gen_q_${index}`;
+            const questionText_es = q.question_es;
+            const ttsHtml = `<span class="tts-icon" data-tts="${q.question_es}">🔊</span>`;
+            
+            const translationKey = `quiz_${q.id}_trans`;
+            const translationText = uiStrings[currentLanguage][translationKey] || '';
+            const translationHtml = `<span class="quiz-translation" data-lang-key="${translationKey}">${translationText}</span>`;
+
+            const emojiHtml = q.emoji ? `<span class="quiz-image-placeholder">${q.emoji}</span>` : '';
+
+            const optionsHtml = q.options.map((opt, i) => 
+                `<button onclick="checkQuizAnswer('${qId}', ${i === q.correct})">${opt}</button>`
+            ).join('');
+            
+            quizContainer.innerHTML += `
+                <div class="quiz-question" data-quiz-id="${q.id}" data-q-index="${index + 1}">
+                    ${emojiHtml}
+                    <p class="question-text">${index + 1}. ${questionText_es} ${ttsHtml}</p>
+                    ${translationHtml}
+                    ${optionsHtml}
+                    <span id="feedback-${qId}" class="feedback"></span>
+                    <div id="explanation-${qId}" class="explanation-text" style="display:none; margin-top:10px;">
+                        <strong>${currentLanguage === 'en' ? 'Explanation' : 'Explicación'}:</strong> ${q.explanation}
+                    </div>
+                </div>
+            `;
+        });
+    }
+
+    window.checkQuizAnswer = function(questionId, isCorrect) {
+        var feedback = document.getElementById('feedback-' + questionId);
+        var explanation = document.getElementById('explanation-' + questionId);
+        
+        explanation.style.display = 'block';
+
+        if (isCorrect) {
+            feedback.textContent = uiStrings[currentLanguage].feedback_correct;
+            feedback.className = 'feedback correct';
+        } else {
+            feedback.textContent = uiStrings[currentLanguage].feedback_incorrect;
+            feedback.className = 'feedback incorrect';
+        }
+    }
+
+    // 2. Generar Historia
+    function generateStory() {
+        currentStoryData = storyBank[Math.floor(Math.random() * storyBank.length)];
+        storyContainer.innerHTML = currentStoryData.html;
+        storyFeedback.innerHTML = '';
+        storyFeedback.className = '';
+        checkStoryBtn.onclick = checkStory;
+    }
+
+    function checkStory() {
+        let correctCount = 0;
+        let totalQuestions = currentStoryData.total;
+        
+        storyContainer.querySelectorAll('.story-explanation').forEach(e => e.remove());
+
+        for (var i = 1; i <= totalQuestions; i++) {
+            var select = document.getElementById(`${currentStoryData.id}-${i}`);
+            if (!select) continue;
+
+            var value = select.options[select.selectedIndex].value;
+            
+            const expKey = (currentLanguage === 'en') ? 'expEn' : 'expEs';
+            const explanationText = select.dataset[expKey] || "No explanation.";
+            const explanationEl = document.createElement('span');
+            explanationEl.className = 'story-explanation';
+            explanationEl.textContent = `(${explanationText})`;
+            
+            select.parentNode.insertBefore(explanationEl, select.nextSibling);
+
+            if (value === 'correcto') {
+                correctCount++;
+                select.style.borderColor = "var(--green)";
+            } else {
+                select.style.borderColor = "var(--red)";
+            }
+        }
+        
+        if (correctCount === totalQuestions) {
+            storyFeedback.textContent = uiStrings[currentLanguage].feedback_check_story_perfect;
+            storyFeedback.className = "correct";
+        } else {
+            storyFeedback.textContent = uiStrings[currentLanguage].feedback_check_story_errors
+                .replace('{correct}', correctCount)
+                .replace('{total}', totalQuestions);
+            storyFeedback.className = "incorrect";
+        }
+    }
+
+    // --- ARREGLO TÁCTIL (v5.11) ---
+    let touchDraggingItem = null;
+
+    function touchStart(e) {
+        touchDraggingItem = e.target.closest('.draggable');
+        if (!touchDraggingItem) return;
+        
+        // Retraso pequeño para diferenciar scroll de arrastre
+        setTimeout(() => {
+            if(touchDraggingItem) touchDraggingItem.classList.add('dragging');
+        }, 100); // 100ms de retraso
+    }
+
+    function touchMove(e) {
+        if (!touchDraggingItem || !touchDraggingItem.classList.contains('dragging')) return;
+        
+        e.preventDefault(); // Previene el scroll mientras se arrastra
+        
+        let touch = e.touches[0];
+        
+        // Mueve el ítem visualmente (clon fantasma)
+        touchDraggingItem.style.position = 'absolute';
+        touchDraggingItem.style.zIndex = '1000';
+        touchDraggingItem.style.left = (touch.pageX - touchDraggingItem.offsetWidth / 2) + 'px';
+        touchDraggingItem.style.top = (touch.pageY - touchDraggingItem.offsetHeight / 2) + 'px';
+        touchDraggingItem.style.pointerEvents = 'none'; // No dejes que el ítem que se arrastra bloquee los eventos
+
+        // Esconde temporalmente para encontrar el elemento debajo
+        let elementUnder = document.elementFromPoint(touch.clientX, touch.clientY);
+
+        // Quita el resaltado de todas las zonas
+        document.querySelectorAll('.dropzone').forEach(zone => zone.classList.remove('drag-over'));
+
+        if (elementUnder) {
+            let dropzone = elementUnder.closest('.dropzone');
+            if (dropzone) {
+                dropzone.classList.add('drag-over');
+            }
+        }
+    }
+
+    function touchEnd(e) {
+        if (!touchDraggingItem || !touchDraggingItem.classList.contains('dragging')) {
+            touchDraggingItem = null;
+            return;
+        }
+        e.preventDefault();
+
+        // Limpia los estilos de arrastre
+        touchDraggingItem.style.position = '';
+        touchDraggingItem.style.zIndex = '';
+        touchDraggingItem.style.left = '';
+        touchDraggingItem.style.top = '';
+        touchDraggingItem.style.pointerEvents = 'auto'; // Restaura los eventos
+
+        let touch = e.changedTouches[0];
+        let elementUnder = document.elementFromPoint(touch.clientX, touch.clientY);
+        let dropzone = elementUnder ? elementUnder.closest('.dropzone') : null;
+
+        if (dropzone) {
+            dropzone.appendChild(touchDraggingItem);
+        }
+        
+        // Limpieza final
+        touchDraggingItem.classList.remove('dragging');
+        touchDraggingItem = null;
+        document.querySelectorAll('.dropzone').forEach(zone => zone.classList.remove('drag-over'));
+    }
+    // --- FIN ARREGLO TÁCTIL ---
+
+
+    // 3. Generar Drag & Drop
+    function generateDragDrop() {
+        dragPool.innerHTML = '';
+        dragFeedback.innerHTML = '';
+        dragFeedback.className = '';
+        document.querySelectorAll('.dropzone .draggable').forEach(item => item.remove());
+        
+        const infinitiveItems = shuffleArray(dragDropBank.filter(i => i.type === 'infinitive')).slice(0, 4);
+        const subjunctiveItems = shuffleArray(dragDropBank.filter(i => i.type === 'subjunctive')).slice(0, 4);
+        currentDragItems = shuffleArray([...infinitiveItems, ...subjunctiveItems]);
+        
+        currentDragItems.forEach(item => {
+            const ttsHtml = `<span class="tts-icon" data-tts="${item.text.replace(/<[^>]*>?/gm, '')}">🔊</span>`; // Limpia HTML para el audio
+            dragPool.innerHTML += `
+                <div class="draggable" draggable="true" id="drag-${item.id}" 
+                     data-type="${item.type}" 
+                     data-explanation-en="${item.exp_en}" 
+                     data-explanation-es="${item.exp_es}">
+                    ${item.text} ${ttsHtml}
+                </div>`;
+        });
+        
+        addDragDropListeners();
+    }
+    
+    function addDragDropListeners() {
+        const draggables = document.querySelectorAll('.draggable');
+        const dropzones = document.querySelectorAll('.dropzone');
+
+        draggables.forEach(draggable => {
+            // Eventos de Mouse
+            draggable.addEventListener('dragstart', (e) => {
+                e.target.classList.add('dragging');
+            });
+            draggable.addEventListener('dragend', (e) => {
+                e.target.classList.remove('dragging');
+            });
+            
+            // Eventos Táctiles (v5.11)
+            draggable.addEventListener('touchstart', touchStart, { passive: true }); // passive: true para permitir scroll si no se arrastra
+        });
+        
+        // Listeners globales para mover y soltar (necesarios para táctil)
+        document.addEventListener('touchmove', touchMove, { passive: false });
+        document.addEventListener('touchend', touchEnd);
+
+
+        dropzones.forEach(zone => {
+            zone.addEventListener('dragover', e => { e.preventDefault(); zone.classList.add('drag-over'); });
+            zone.addEventListener('dragleave', () => zone.classList.remove('drag-over'));
+            zone.addEventListener('drop', e => {
+                e.preventDefault();
+                zone.classList.remove('drag-over');
+                const dragging = document.querySelector('.dragging');
+                if (dragging) { zone.appendChild(dragging); }
+            });
+        });
+    }
+    
+    checkDragBtn.onclick = checkDragDrop;
+
+    function checkDragDrop() {
+        let correctCount = 0;
+        let total = currentDragItems.length;
+        const infinitiveZone = document.getElementById('zone-infinitive');
+        const subjunctiveZone = document.getElementById('zone-subjunctive');
+
+        document.querySelectorAll('.drag-explanation').forEach(e => e.remove());
+
+        const checkZone = (zone, correctType) => {
+            zone.querySelectorAll('.draggable').forEach(item => {
+                const expKey = (currentLanguage === 'en') ? 'explanationEn' : 'explanationEs';
+                const explanationText = item.dataset[expKey] || "No explanation.";
+                const explanationEl = document.createElement('p');
+                explanationEl.className = 'drag-explanation';
+                explanationEl.textContent = `(${explanationText})`;
+                item.appendChild(explanationEl);
+
+                if (item.dataset.type === correctType) {
+                    item.style.backgroundColor = '#d4edda'; correctCount++;
+                } else { item.style.backgroundColor = '#f8d7da'; }
+            });
+        };
+
+        checkZone(infinitiveZone, 'infinitive');
+        checkZone(subjunctiveZone, 'subjunctive');
+
+        dragPool.querySelectorAll('.draggable').forEach(item => {
+            item.style.backgroundColor = '#f8d7da';
+            const expKey = (currentLanguage === 'en') ? 'explanationEn' : 'explanationEs';
+            const explanationText = item.dataset[expKey] || "No explanation.";
+            const explanationEl = document.createElement('p');
+            explanationEl.className = 'drag-explanation';
+            explanationEl.textContent = `(${explanationText})`;
+            item.appendChild(explanationEl);
+        });
+
+        if (correctCount === total) {
+            dragFeedback.textContent = uiStrings[currentLanguage].feedback_drag_perfect;
+            dragFeedback.className = "correct";
+        } else {
+            dragFeedback.textContent = uiStrings[currentLanguage].feedback_check_story_errors
+                .replace('{correct}', correctCount)
+                .replace('{total}', total);
+            dragFeedback.className = "incorrect";
+        }
+    }
+
+    // --- Pestaña 4: Lógica de Flashcards ---
+    let currentCard = 0;
+    const cardElement = document.getElementById('flashcard');
+    const cardFront = document.getElementById('card-front');
+    const cardBack = document.getElementById('card-back');
+
+    window.loadCard = function(index) {
+        if (flashcardData[index]) {
+            const data = flashcardData[index];
+            const ttsHtml = `&nbsp;<span class="tts-icon" data-tts="${data.es.replace(/<[^>]*>?/gm, '')}">🔊</span>`;
+            cardFront.innerHTML = data.en;
+            cardBack.innerHTML = `
+                <div>${data.es}${ttsHtml}</div>
+                <p>(${data.explanation})</p>
+            `;
+            cardElement.classList.remove('is-flipped');
+        }
+    }
+    
+    window.flipCard = function() { 
+        cardElement.classList.toggle('is-flipped'); 
+    }
+    
+    window.nextCard = function() {
+        currentCard = (currentCard + 1) % flashcardData.length;
+        loadCard(currentCard);
+    }
+    window.prevCard = function() {
+        currentCard = (currentCard - 1 + flashcardData.length) % flashcardData.length;
+        loadCard(currentCard);
+    }
+    
+    cardElement.addEventListener('click', function(e) {
+        if (e.target.classList.contains('tts-icon')) {
+            e.stopPropagation(); 
+            const textToSpeak = e.target.dataset.tts;
+            if (textToSpeak) {
+                speak(textToSpeak);
+            }
+        } else {
+            flipCard(); 
+        }
+    });
+
+    // --- Funciones de Utilidad ---
+    function shuffleArray(array) {
+        let newArray = [...array];
+        for (let i = newArray.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+        }
+        return newArray;
+    }
+
+    // --- Inicialización ---
+    loadCard(0); // Carga la primera flashcard
+    updateLanguage(); // Establece el idioma inicial
+});
+
+</script>
+</html>
